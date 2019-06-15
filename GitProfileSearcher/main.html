@@ -1,0 +1,122 @@
+<html>
+    <head>
+        <title>
+            Fetching Github Data
+        </title>
+
+        <link rel="stylesheet" type="text/css" href="main.css"/>
+    </head>
+    <body>
+        <div class="heading">
+            <p>Getting the Github User Information</p>
+        </div>
+
+        <div class="input_fields">.
+            <form onsubmit = "return getdata()">
+          <input id="userName" type="text" placeholder="    Enter the User Name">
+
+            <br><br>
+          <input type="submit" value="Search">
+        </form>
+        </div>
+
+        <div class="output">
+            <p>Details</p>
+
+            <table  class="table1" >
+                <tr>
+                    <td id="name" class="data_display"></td>
+                    <td rowspan="3"><img id="myImg" height="100%" width="100%"></td></td>
+                    <td id="repo" class="data_display"></td>
+                </tr>
+                <tr>
+                        <td id="ids" class="data_display"></td>
+                        <td id="date" class="data_display"></td>
+                        
+                    </tr>
+                    <tr>
+                            <td id="type" class="data_display"></td>
+                            <td id="follow" class="data_display"></td>
+                            
+                        </tr>
+            
+            </table>
+            
+                
+
+                
+
+          
+        </div>
+
+        <script>          
+let getdata = e => {  
+    var getuserinfo = (username) => 
+            	fetch(`https://api.github.com/users/${username}`)
+               .then(res => res.json())
+               .then(res => res)
+
+                var getuserrepos = async (username) =>
+                {
+                var userdetail = await getuserinfo(username)
+                console.log('Username : ', userdetail)
+                let dp = userdetail.avatar_url
+                console.log(dp)   
+                let a = dp.toString();             
+                document.getElementById("myImg").src = a;
+                
+                let name = userdetail.name;
+                let b = "<b> Name </b>: " + name.toString();
+                console.log(b) 
+                document.getElementById("name").innerHTML =  b; 
+
+                let id = userdetail.id;
+                let c = id.toString();
+                console.log(c)
+                document.getElementById("ids").innerHTML = "<b> ID </b>: " + id; 
+
+
+                let public_repo = userdetail.public_repos;
+                let d = public_repo.toString();
+                console.log(d)
+                document.getElementById("repo").innerHTML = "<b> Public Repos  </b>: " + d; 
+
+
+                let created_at = userdetail.created_at;
+                let e = created_at.toString();
+                console.log(e)
+                document.getElementById("date").innerHTML = "<b> Created On </b> :" + e; 
+
+
+                let followers = userdetail.followers;
+                let f = followers.toString();
+                console.log(f)
+                document.getElementById("follow").innerHTML = "<b> Followers </b>: " + f; 
+
+
+                let type = userdetail.type;
+                let g = type.toString();
+                console.log(g)
+                document.getElementById("type").innerHTML = " <b> Type </b> : " + g; 
+
+            
+
+
+             //   let
+
+
+
+                
+                } 
+                   // alert("5555555555")       
+            let a = document.querySelector("#userName").value
+            console.log(a)
+
+            getuserrepos(a)
+            return false
+        }
+        </script>
+
+
+    </body>
+</html>
